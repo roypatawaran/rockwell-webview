@@ -421,13 +421,13 @@ app.get("*", function(req,res){
 });
 
 // Server declaration
-// app.listen(process.env.PORT, process.env.IP, function(){
-//     console.log("Running Server in: " + process.env.IP + " PORT: " + process.env.PORT);
-// });
-
-app.listen(3003, "127.0.0.1", function(){
+app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Running Server in: " + process.env.IP + " PORT: " + process.env.PORT);
 });
+
+// app.listen(3003, "127.0.0.1", function(){
+//     console.log("Running Server in: " + process.env.IP + " PORT: " + process.env.PORT);
+// });
 
 
 // helper functions 
