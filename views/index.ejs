@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <link rel="stylesheet" href="/css/css/bootstrap.css">
+        <link rel="stylesheet" href="/theme/css/theme.css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <!-- <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script> -->
+    </head>
+  <body>
+
+  <style>
+    .modal {
+          display:    none;
+          position:   fixed;
+          z-index:    1000;
+          top:        0;
+          left:       0;
+          height:     100%;
+          width:      100%;
+          background: rgba( 255, 255, 255, .8 ) 
+                      url('http://sampsonresume.com/labs/pIkfp.gif') 
+                      50% 50% 
+                      no-repeat;
+      }
+
+      /* When the body has the loading class, we turn
+         the scrollbar off with overflow:hidden */
+      body.loading {
+          overflow: hidden;   
+      }
+
+      /* Anytime the body has the loading class, our
+         modal element will be visible */
+      body.loading .modal {
+          display: block;
+      }
+
+  </style>
+
+<form action="/buy/<%- token %>" method="post">
+
+<div class="col-lg-12 center">
+
+  <img src="/img/rockwellist.png" style="width: 100%; max-width:300px; margin: auto; display: block; ">
+</div>
+
+<div class="col-md-12">
+  <table class="table table-striped col-md-12" style="margin: auto">
+      <colgroup>
+        <col style="width: 30%" />
+        <col style="width: 70%" />
+      </colgroup>
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>₱ 500</td>
+        <td>
+          <div class="center">
+            <div class="input-group">
+                <!-- <span class="input-group-btn"> -->
+                    <button type="button" class="btn btn-default btn-number col-md-3" style="width:33%; float:left" disabled="disabled" data-type="minus" data-field="quant[1]">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                <!-- </span> -->
+                <input type="text" id="input1" name="quant[1]" class="form-control input-number" style="width:33%;"value="0" min="0" max="100">
+                <!-- <span class="input-group-btn"> -->
+                    <button type="button" class="btn btn-default btn-number" style="width:33%; float:right" data-type="plus" data-field="quant[1]">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                <!-- </span> -->
+                </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>₱ 1000</td>
+        <td>
+          <div class="center">
+            <div class="input-group">
+              <!-- <span class="input-group-btn"> -->
+                    <button type="button" class="btn btn-default btn-number" style="width:33%; float:left" disabled="disabled" data-type="minus" data-field="quant[2]">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                <!-- </span> -->
+
+                <input type="text" name="quant[2]"  id="input2" class="form-control input-number" style="width:33%;" value="0"  style="width:33%;" min="0" max="100">
+                <!-- <span class="input-group-btn"> -->
+                    <button type="button" class="btn btn-default btn-number" style="width:33%; float:right" data-type="plus" data-field="quant[2]">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                <!-- </span> -->
+
+                </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>₱ 5000</td>
+        <td>
+          <div class="center">
+            <div class="input-group">
+                <!-- <span class="input-group-btn"> -->
+                    <button type="button" class="btn btn-default btn-number" style="width:33%; float:left" disabled="disabled" data-type="minus" data-field="quant[3]">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                <!-- </span> -->
+
+                <input type="text" name="quant[3]" class="form-control input-number"  id="input3" style="width:33%;" style="width:33%;" value="0" min="0" max="100">
+                <!-- <span class="input-group-btn"> -->
+                    <button type="button" class="btn btn-default btn-number" style="width:33%; float:right" data-type="plus" data-field="quant[3]">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                <!-- </span> -->
+
+                </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-md-12">
+  <table class="table table-striped col-md-8">
+      <colgroup>
+        <col style="width: 40%" />
+        <col style="width: 60%" />
+      </colgroup>
+    <thead>
+    </thead>
+    <tbody> 
+      <tr>
+        <td>Amount Due 
+        (₱): </td>
+        <td><label><span id="totalPrice"></span></label></td>
+      </tr>   
+    </tbody>
+  </table>
+</div>
+
+<div style="display: flex; justify-content: center">
+
+    <input class="center btn btn-danger btn-lg" id="btn-procure" type="submit" value="Pay for E-GC">
+</div>
+
+</form>
+
+   <!--  <div class="loader"></div> -->
+<div class="modal"></div>
+
+</body>
+
+<!-- <div class="modal" id="loadingModal"></div> -->
+
+<script>
+  //plugin bootstrap minus and plus
+//http://jsfiddle.net/laelitenetwork/puJ6G/
+
+$body = $("body");
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+     ajaxStop: function() { $body.removeClass("loading"); }    
+});
+
+$('.btn-number').click(function(e){
+    e.preventDefault();
+    
+    fieldName = $(this).attr('data-field');
+    type      = $(this).attr('data-type');
+    var input = $("input[name='"+fieldName+"']");
+    var currentVal = parseInt(input.val());
+    if (!isNaN(currentVal)) {
+        if(type == 'minus') {
+          var myData = {};
+            myData.quant1 =  $("#input1").val();
+            myData.quant2 = $("#input2").val();
+            myData.quant3 = $("#input3").val();
+            
+            if(currentVal > input.attr('min')) {
+                input.val(currentVal - 1).change();
+            } 
+            if(parseInt(input.val()) == input.attr('min')) {
+                $(this).attr('disabled', true);
+            }
+            $.ajax({
+              type: "POST",
+              url: "/computation",
+              data: myData,
+              dataType: "json",
+              // contentType: 'application/json; charset=utf-8"',
+              // dataType:"json",
+              success: function(result) {
+
+                $("#totalPrice").text(result.success)
+                  console.log(result.success);
+
+              },
+              error: function(result) {
+                  alert('error');
+              }
+          });
+
+        } else if(type == 'plus') {
+
+            if(currentVal < input.attr('max')) {
+                input.val(currentVal + 1).change();
+            }
+            if(parseInt(input.val()) == input.attr('max')) {
+                $(this).attr('disabled', true);
+            }
+            var myData = {};
+            myData.quant1 =  $("#input1").val();
+            myData.quant2 = $("#input2").val();
+            myData.quant3 = $("#input3").val();
+            console.log(myData)
+            
+            $.ajax({
+              type: "POST",
+              url: "/computation",
+              data: myData,
+              dataType: "json",
+              // $("#loadingModal").addClass("loading"); 
+              // contentType: 'application/json; charset=utf-8"',
+              // dataType:"json",
+              success: function(result) {
+                // $("#loadingModal").removeClass("loading"); 
+                $("#totalPrice").text(result.success)
+                  console.log(result.success);
+
+              },
+              error: function(result) {
+                  alert('error');
+              }
+          });
+
+        }
+    } else {
+        input.val(0);
+    }
+});
+$('#input-number').focusin(function(){
+   $(this).data('oldValue', $(this).val());
+});
+$('.input-number').change(function() {
+    
+    minValue =  parseInt($(this).attr('min'));
+    maxValue =  parseInt($(this).attr('max'));
+    valueCurrent = parseInt($(this).val());
+    
+    name = $(this).attr('name');
+    if(valueCurrent >= minValue) {
+        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the minimum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    if(valueCurrent <= maxValue) {
+        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the maximum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    
+    
+});
+$(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) || 
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+
+
+$("#btn-procure").click(function(e){
+  $body.addClass("loading"); 
+})
+  // $body = $("body");
+
+  // $(document).on({
+  //     ajaxStart: function() { $("#loadingModal").addClass("loading");    },
+  //      ajaxStop: function() { $("#loadingModal").removeClass("loading"); }    
+  // });
+
+// $('#btn-procure').click(function(){
+//   $(this).attr("disabled", "disabled")
+// })
+
+  </script>
+						

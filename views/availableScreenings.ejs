@@ -1,0 +1,11 @@
+
+
+<% data.forEach(function(datas) { %>
+<div><%= datas.name %> ____ <%= datas.id %>_____<%=datas.cinema%></div>
+<%datas.screenings.forEach(function(screens){ %>
+
+	<div>_________ <a href="/seats/<%=screens.id %>"><%=screens.id%></a> </div>
+
+<% }) %>
+
+<% }) %>
