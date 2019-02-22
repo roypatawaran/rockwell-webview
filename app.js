@@ -210,7 +210,7 @@ app.post('/buy/:token' , ( req , res ) => {
     "payment_method": "paypal"
   },
   "redirect_urls": {
-    "return_url": "https://rockwell-mobile.herokuapp.com/success/v1/apppurchase/success/" + req.params.token,
+    "return_url": "https://rockwell-mobile.herokuapp.com/v1/apppurchase/success/" + req.params.token,
     "cancel_url": "https://rockwell-mobile.herokuapp.com/err"
   },
   "transactions": [{
